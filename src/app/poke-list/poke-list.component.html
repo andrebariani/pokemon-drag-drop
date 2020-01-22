@@ -1,0 +1,32 @@
+<div class='col-md-4'>
+    <input type='text'
+          [(ngModel)]='listFilter'/>
+  </div>
+<div class="dragBox" [dndDraggable]="pokeBox" [dndEffectAllowed]="dragBox.effectAllowed" [dndDisableIf]="dragBox.disable"
+    [dndType]="dragBox.type"
+    (dndStart)="onDragStart($event)" (dndCopied)="onDraggableCopied($event)" (dndLinked)="onDraggableLinked($event)" (dndMoved)="onDraggableMoved($event)"
+    (dndCanceled)="onDragCanceled($event)" (dndEnd)="onDragEnd($event)">
+
+    <div class="card">
+        <div class="card-header">
+            <span>PokéBox</span>
+        </div>
+    </div>
+</div>
+
+<div class="draggable" [dndDraggable]="pokemon" [dndEffectAllowed]="draggable.effectAllowed" [dndDisableIf]="draggable.disable"
+    [dndType]="draggable.type"
+    (dndStart)="onDragStart($event)" (dndCopied)="onDraggableCopied($event)" (dndLinked)="onDraggableLinked($event)" (dndMoved)="onDraggableMoved($event)"
+    (dndCanceled)="onDragCanceled($event)" (dndEnd)="onDragEnd($event)" 
+    *ngFor='let pokemon of filteredPokemons'>
+
+    <div class="card">
+        <div class="card-header">
+            <span><img src="assets/sprites/{{('000' + pokemon.id).substr(-3)}}MS.png"></span>
+            {{pokemon.name.english}}
+        </div>
+        <div class="card-body">
+            {{pokemon.type[0]}}<span *ngIf="pokemon.type[1]">/{{pokemon.type[1]}}</span>
+        </div>
+    </div>
+</div>

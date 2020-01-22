@@ -1,0 +1,22 @@
+.dropzone {
+    padding-bottom: 500px;
+    background: ghostwhite
+}
+
+.placeholder1 {
+    background: rgb(206, 238, 238);
+    border-radius: 2px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.placeholder2 {
+background: rgb(38, 228, 228);
+border-radius: 2px;
+padding: 20px;
+margin-bottom: 10px;
+}
+
+.poke-board-header {
+    margin: 0%;
+}
