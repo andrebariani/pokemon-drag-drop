@@ -9,7 +9,7 @@ import { Pokemon } from '../models/pokemon.model';
   providedIn: 'root'
 })
 export class PokeListService {
-  private dataUrl = 'api/pokedex.json'
+  private dataUrl = 'assets/pokedex.json'
   constructor(private http: HttpClient) { }
 
   getPokemons(): Observable<Pokemon[]> {
