@@ -1,5 +1,6 @@
-# ProtoDnD
+# Nested Drag and Drop Example
 
+Project demo available [here](https://stackblitz.com/github/andrebariani/pokemon-drag-drop).
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.22.
 
 ## Development server
