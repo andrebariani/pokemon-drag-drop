@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
-import { Pokemon } from '../models/pokemon.model';
 
-interface NestedListPokemon {
-  content: Pokemon
-  children?: NestedListPokemon[];
-}
+import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
+
+import { Pokemon } from '../models/pokemon.model';
+import { NestedListPokemon } from '../models/nested-list-pokemon.model';
+import { PokeBoardService } from './poke-board.service';
 
 @Component({
   selector: 'app-poke-board',
@@ -14,11 +13,18 @@ interface NestedListPokemon {
 })
 export class PokeBoardComponent implements OnInit {
 
+  pokeBox: NestedListPokemon = {content: new Pokemon(), label: "", children: []};
   pokemonBoard: Array<NestedListPokemon> = [];
+  dropzoneTypes: string[] = ["pokemon", "pokeBox"];
+  saveHidden = true;
 
-  constructor() { }
+  constructor(private pokeBoardService: PokeBoardService) { }
 
-  ngOnInit() {
+  ngOnInit() { 
+    this.pokeBoardService.getPokemons().subscribe( {
+      next: pokemons => { this.pokemonBoard = pokemons },
+    error: err => "Uh oh..."
+    });
   }
 
   onDragged(item: any, list?: any[], effect?: DropEffect) {
@@ -43,4 +49,16 @@ export class PokeBoardComponent implements OnInit {
     }
     
   }
+
+  onCapturedPokemon(p: Pokemon) : void {
+    let newPoke = {content: p};
+    this.pokemonBoard.push(newPoke);
+  }
+
+  save(): void {
+    this.saveHidden = !this.saveHidden;
+    console.log("It's lying, nothing is saved!");
+  }
+
+
 }

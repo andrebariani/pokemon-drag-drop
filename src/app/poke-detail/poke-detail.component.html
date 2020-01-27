@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{ pokemon.name.english }}</h2>
+
+<!-- Conteúdo informativo do modal -->
+<mat-dialog-content class="mat-typography">
+    <div class="main-message">
+        {{ pokemon | json }}
+    </div>
+    <div class="details-box" *ngIf="(extraText != null)">
+        
+    </div>
+</mat-dialog-content>
+
+<!-- Opções de resposta no modal -->
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="mat-raised-button mat-warn" cdkFocusInitial>Close</button>
+</mat-dialog-actions>

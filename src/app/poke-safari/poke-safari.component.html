@@ -1,0 +1,31 @@
+<p>Welcome to the Pokemon Safari!</p>
+<button (click)="start()">Click me to start!</button>
+<p>{{message}}</p>
+
+<div *ngIf="wildPokemon">
+    <div class="card">
+        <div class="card-header">
+            <div><img src="assets/images/{{('000' + wildPokemon.id).substr(-3)}}.png">
+            </div>
+            <div>{{battleMsg}}</div>
+            
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col col-example">
+                    <button (click)="throwRock()">Throw Rock</button>
+                </div>
+                <div class="col col-example">
+                    <button (click)="throwBait()">Throw Bait</button>
+                </div>
+                <div class="w-100"></div>
+                <div class="col col-example">
+                    <button (click)="throwPokeball()">Throw Pokéball</button>
+                </div>
+                <div class="col col-example">
+                    <button (click)="run()">Run away!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

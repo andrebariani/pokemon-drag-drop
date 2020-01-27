@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DndDropEvent } from 'ngx-drag-drop';
+import { MatDialog, MatDialogConfig } from '@angular/material';
 
 import { Pokemon } from '../models/pokemon.model';
 import { PokeListService } from './poke-list.service';
+import { PokeDetailComponent } from '../poke-detail/poke-detail.component';
 
 interface NestedListPokemon {
   content: Pokemon;
@@ -14,22 +15,6 @@ interface NestedListPokemon {
   styleUrls: ['./poke-list.component.css']
 })
 export class PokeListComponent implements OnInit {
-
-  draggable = {
-    data: "myDragData",
-    effectAllowed: "all",
-    disable: false,
-    handle: false,
-    type: "pokemon"
-  };
-
-  dragBox = {
-    data: "myDragData",
-    effectAllowed: "all",
-    disable: false,
-    handle: false,
-    type: "pokeBox"
-  };  
 
   _listFilter: string;
   get listFilter(): string {
@@ -45,17 +30,25 @@ export class PokeListComponent implements OnInit {
       pokemon.name.english.toLocaleLowerCase().indexOf(value.toLocaleLowerCase()) !== -1);
   }
 
-  pokeBox: NestedListPokemon = {content: new Pokemon(), children: []};
   pokemons: Array<Pokemon>;
   filteredPokemons: Array<Pokemon>;
 
-  constructor(private pokeListService: PokeListService) { }
+  constructor(private pokeListService: PokeListService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.pokeListService.getPokemons().subscribe( {
       next: pokemons => { this.pokemons = pokemons, this.filteredPokemons = this.pokemons },
     error: err => "Uh oh..."
     });
+  }
+
+  openDetail(p: Pokemon) {
+    // Definição do dialog
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.maxWidth = '500px';
+    dialogConfig.data = p;
+    const dialogRef = this.dialog.open(PokeDetailComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe();
   }
 
   onDragStart(event: DragEvent) {

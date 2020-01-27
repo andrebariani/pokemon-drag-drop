@@ -1,4 +1,15 @@
-<p class="poke-board-header">Insert Here (With Bug)</p>
+<button (click)="save()">save</button><span [hidden]="saveHidden">Saved!</span>
+<div class="dragBox" [dndDraggable]="pokeBox" [dndEffectAllowed]="'all'" [dndDisableIf]="false"
+    [dndType]="'pokeBox'">
+
+    <div class="card">
+        <div class="card-header">
+            <span>PokéBox</span>
+        </div>
+    </div>
+</div>
+
+<p class="poke-board-header">Insert Here (No Bug)</p>
 <div class="layout-padding">
     <ng-template #recursiveList let-list>
 
@@ -9,6 +20,7 @@
             [dndDraggable]="pokemon" 
             dndEffectAllowed="move" 
             [dndDisableIf]="pokemon.disable"
+            [dndType]="pokemon.children ? dropzoneTypes[1] : dropzoneTypes[0]"
             (dndMoved)="onDragged(pokemon, list, 'move')">
 
             <div class="card">
@@ -17,9 +29,11 @@
                         <img src="assets/sprites/{{('000' + pokemon.content.id).substr(-3)}}MS.png">
                         {{pokemon.content.name.english}}
                     </span>
+                    <input [(ngModel)]="pokemon.label" *ngIf="pokemon.children" placeholder="New PokéBox"/>
                     <div class="card-body"
                             *ngIf="pokemon.children" 
-                            dndDropzone (dndDrop)="onDrop($event, pokemon.children)">
+                            dndDropzone (dndDrop)="onDrop($event, pokemon.children)"
+                            [dndDropzone]="[dropzoneTypes[0]]">
                         <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemon.children }"></ng-container>
                     </div>
                 </div>
@@ -27,8 +41,9 @@
         </div>
     </ng-template>
 
-    <div class="placeholder1" dndDropzone (dndDrop)="onDrop($event, pokemonBoard)">
+    <div class="placeholder1" dndDropzone (dndDrop)="onDrop($event, pokemonBoard)" [dndDropzone]="dropzoneTypes">
         <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemonBoard }"></ng-container>
     </div>
-
 </div>
+
+<app-poke-safari (capturedPokemon)="onCapturedPokemon($event)"></app-poke-safari>

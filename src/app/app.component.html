@@ -1,5 +1,8 @@
 <div style='height: 100%; display: flex;'>
-  <app-poke-list></app-poke-list>
-  <app-poke-board></app-poke-board>
-  <app-poke-board-bugless></app-poke-board-bugless>
+  <h1>{{title}}</h1>
+  <nav>
+    <a routerLink="/poke-list">Pokemon List</a>
+    <a routerLink="/poke-board">Pokemon Safari</a>
+  </nav>
+  <router-outlet></router-outlet> 
 </div>
