@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { PokeListService } from '../poke-list/poke-list.service';
 import { Pokemon } from '../models/pokemon.model';
 import { EventEmitter } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { SnackBarComponent } from '../material/snackbar/snack-bar.component';
 
 @Component({
   selector: 'app-poke-safari',
@@ -10,9 +12,14 @@ import { EventEmitter } from '@angular/core';
 })
 export class PokeSafariComponent implements OnInit {
 
-  message: string;
+  afterBattleMsg: string;
   battleMsg: string;
-  allPokemons = [];
+  escapedMsg =  [
+    "Oh no! The Pokémon broke free!",
+    "Aww! It appeared to be caught!",
+    "Aargh! Almost had it!"
+  ];
+  allPokemons: Array<Pokemon> = [];
 
   wildPokemon: Pokemon;
   angry: number;
@@ -21,7 +28,7 @@ export class PokeSafariComponent implements OnInit {
 
   @Output() capturedPokemon: EventEmitter<Pokemon> = new EventEmitter<Pokemon>();
 
-  constructor(private pokeListService: PokeListService) { }
+  constructor(private pokeListService: PokeListService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.pokeListService.getPokemons().subscribe({
@@ -31,10 +38,10 @@ export class PokeSafariComponent implements OnInit {
   }
 
   start() {
-    this.message = "";
+    this.afterBattleMsg = "";
     this.wildPokemon = this.allPokemons[Math.floor(Math.random() * this.allPokemons.length)];
 
-    this.battleMsg = "A Wild " + this.wildPokemon.name.english + " appears! What will you do?"
+    this.battleMsg = "A Wild " + this.wildPokemon.name.english + " appears! What will you do?";
 
     this.angry = 0;
     this.eating = 0;
@@ -42,11 +49,11 @@ export class PokeSafariComponent implements OnInit {
   }
 
   run() {
-    this.message = "You've ran away!";
+    this.afterBattleMsg = "You've ran away!";
     this.wildPokemon = null;
   }
 
-  pokemonRan() {
+  didPokemonRan() {
     let runProb: number = 0;
     let escaped = false;
     if (this.eating) {
@@ -60,7 +67,6 @@ export class PokeSafariComponent implements OnInit {
         escaped = true;
       }
     } else {
-      
       runProb = (((this.wildPokemon.base.Speed * 2) % 256));
       if(runProb > 255) {
         escaped = true;
@@ -68,8 +74,17 @@ export class PokeSafariComponent implements OnInit {
     }
 
     if (escaped) {
-      this.message = this.wildPokemon.name.english + " ran away !";
+      this.afterBattleMsg = this.wildPokemon.name.english + " ran away !";
       this.wildPokemon = null;
+
+      this.snackBar.openFromComponent(SnackBarComponent, {
+        duration: 5000,
+        data: { 
+          isCaptured: false,
+          message: this.afterBattleMsg
+        }
+      });
+
       return true;
     }
     return false;
@@ -79,7 +94,7 @@ export class PokeSafariComponent implements OnInit {
     this.eating = 0;
     this.angry = Math.min(this.angry + Math.floor((Math.random() * 5)), 255);
     this.catchRate = Math.min(this.catchRate * 2, 255);
-    if (!this.pokemonRan()) {
+    if (!this.didPokemonRan()) {
       this.battleMsg = this.wildPokemon.name.english + " is angry!!";
       this.catchRate = this.catchRate / 2;
     }
@@ -89,44 +104,37 @@ export class PokeSafariComponent implements OnInit {
     this.angry = 0;
     this.eating = Math.min(this.eating + Math.floor((Math.random() * 5)), 255);
 
-    if (!this.pokemonRan()) {
+    if (!this.didPokemonRan()) {
       this.battleMsg = this.wildPokemon.name.english + " is eating!";
       this.catchRate = this.catchRate / 2;
     }
   }
 
   throwPokeball() {
-
     let finalCatchRate = Math.pow(2, 16) / Math.pow((255 / this.catchRate), (3 / 16));
 
     for(let i = 0 ; i < 3 ; i++) {
       if(finalCatchRate <= (Math.floor(Math.random() * (Math.pow(2, 16))))) {
-        console.log(finalCatchRate, (Math.floor(Math.random() * (Math.pow(2, 16)))), i)
-        if(!this.pokemonRan()) {
-          switch(i) {
-            case 0: {
-              this.battleMsg = "Oh no! The Pokémon broke free!";
-              break;
-            }
-            case 1: {
-              this.battleMsg = "Aww! It appeared to be caught!";
-              break;
-            }
-            case 2: {
-              this.battleMsg = "Aargh! Almost had it!";
-              break;
-            }
-          }
-        }
+        if(!this.didPokemonRan()) this.battleMsg = this.escapedMsg[i];
         return;
       }
     }
     
     this.capturedPokemon.emit(this.wildPokemon)
-
-    this.message = "You've captured " + this.wildPokemon.name.english + "!";
-
+    this.afterBattleMsg = "You've captured " + this.wildPokemon.name.english + "!";
     this.wildPokemon = null;
+
+    let snackBarRef = this.snackBar.openFromComponent(SnackBarComponent, {
+      duration: 5000,
+      data: { 
+        isCaptured: true,
+        message: this.afterBattleMsg
+      }
+    });
+
+    snackBarRef.onAction().subscribe(() => {
+      console.log("miau");
+    });
   }
 
 }

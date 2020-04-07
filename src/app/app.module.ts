@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { DndModule } from 'ngx-drag-drop';
 
@@ -20,6 +22,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PokeSafariComponent } from './poke-safari/poke-safari.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PokeDetailComponent } from './poke-detail/poke-detail.component';
+import { SnackBarComponent } from './material/snackbar/snack-bar.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { PokeDetailComponent } from './poke-detail/poke-detail.component';
     PokeListComponent,
     PokeBoardComponent,
     PokeSafariComponent,
-    PokeDetailComponent
+    PokeDetailComponent,
+    SnackBarComponent
   ],
   imports: [
     BrowserModule,
@@ -42,11 +46,14 @@ import { PokeDetailComponent } from './poke-detail/poke-detail.component';
     MatMenuModule,
     MatSelectModule,
     MatToolbarModule,
+    MatGridListModule,
+    MatSnackBarModule,
     FormsModule,
     AppRoutingModule,
   ],
   entryComponents: [
-    PokeDetailComponent
+    PokeDetailComponent,
+    SnackBarComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

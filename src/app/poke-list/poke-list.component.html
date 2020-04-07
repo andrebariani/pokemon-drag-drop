@@ -1,23 +1,21 @@
-<div class='col-md-4'>
-    <input type='text'
-          [(ngModel)]='listFilter'/>
-  </div>
-
-<div class="draggable" [dndDraggable]="pokemon" [dndEffectAllowed]="'all'" [dndDisableIf]="false"
-    [dndType]="'pokemon'"
-    (dndStart)="onDragStart($event)" (dndCopied)="onDraggableCopied($event)" (dndLinked)="onDraggableLinked($event)" (dndMoved)="onDraggableMoved($event)"
-    (dndCanceled)="onDragCanceled($event)" (dndEnd)="onDragEnd($event)" 
-    *ngFor='let pokemon of filteredPokemons'>
-
-    <a (click)="openDetail(pokemon)">
-    <div class="card">
-        <div class="card-header">
-            <span><img src="assets/sprites/{{('000' + pokemon.id).substr(-3)}}MS.png"></span>
-            {{pokemon.name.english}}
-        </div>
-        <div class="card-body">
-            {{pokemon.type[0]}}<span *ngIf="pokemon.type[1]">/{{pokemon.type[1]}}</span>
-        </div>
+<div style="width: 100%;">
+    <div class='col-md-4'>
+        <input type='text' [(ngModel)]='listFilter' />
     </div>
-    </a>
+
+    <mat-grid-list cols="5" rowHeight="150px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" *ngFor='let pokemon of filteredPokemons'>
+            <a (click)="openDetail(pokemon)">
+                <div class="card">
+                    <div class="card-header">
+                        <span><img src="assets/sprites/{{('000' + pokemon.id).substr(-3)}}MS.png"></span>
+                        {{pokemon.name.english}}
+                    </div>
+                    <div class="card-body">
+                        {{pokemon.type[0]}}<span *ngIf="pokemon.type[1]">/{{pokemon.type[1]}}</span>
+                    </div>
+                </div>
+            </a>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>
