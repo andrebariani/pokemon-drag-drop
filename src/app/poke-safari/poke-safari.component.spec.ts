@@ -1,25 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PokeSafariComponent } from './poke-safari.component';
+import { PokeSafariComponent } from "./poke-safari.component";
 
 describe('PokeSafariComponent', () => {
-  let component: PokeSafariComponent;
-  let fixture: ComponentFixture<PokeSafariComponent>;
-
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ PokeSafariComponent ]
-    })
-    .compileComponents();
-  }));
-
+  let pokeSafariComponent: PokeSafariComponent;
   beforeEach(() => {
-    fixture = TestBed.createComponent(PokeSafariComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    let pokeListService = jasmine.createSpyObj(['getPokemons']);
+    let snackBar = jasmine.createSpyObj(['openFromComponent']);
+
+    pokeSafariComponent = new PokeSafariComponent(pokeListService, snackBar);
+  })
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(pokeSafariComponent).toBeTruthy();
   });
 });
