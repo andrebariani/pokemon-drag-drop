@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "ProtoDnD"
+  "defaultProject": "ProtoDnD",
+  "cli": {
+    "analytics": false
+  }
 }
