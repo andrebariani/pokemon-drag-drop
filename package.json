@@ -4,7 +4,6 @@
   "scripts": {
     "preversion": "npm test",
     "version": "npm run ng -- build",
-    "postversion": "git push --tags",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
