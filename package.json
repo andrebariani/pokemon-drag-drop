@@ -1,9 +1,10 @@
 {
   "name": "proto-dn-d",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "scripts": {
     "preversion": "npm test",
-    "version": "npm run ng -- build",
+    "version": "npm run build && git add -A dist",
+    "postversion": "git push && git push --tags && rm -rf build/temp",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
