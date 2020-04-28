@@ -23,7 +23,7 @@
             [dndType]="pokemon.children ? dropzoneTypes[1] : dropzoneTypes[0]"
             (dndMoved)="onDragged(pokemon, list, 'move')">
 
-            <div class="card">
+            <div style="width:fit-content" class="card">
                 <div class="card-header">
                     <span *ngIf="pokemon.content.id">
                         <img style="display: flex; position: relative;" src="assets/sprites/{{('000' + pokemon.content.id).substr(-3)}}MS.png">
