@@ -34,8 +34,11 @@ jobs:
     - name: Build
       run: npm run ng -- build
 
+    - name: Update version
+      run: npm version patch
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
-          name: dist
-          path: dist
+          name: pokemon-drag-drop
+          path: pokemon-drag-drop
