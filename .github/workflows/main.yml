@@ -22,7 +22,6 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
       
-      
     - name: Install dependencies
       run: npm install --save-dev @angular/cli@latest
 
@@ -31,12 +30,6 @@ jobs:
 
     - name: Build
       run: npm run ng -- build
-
-    - name: Update version
-      run: npm version patch --force -m "Upgrade to %s"
-
-    - name: Commit update
-      run: git push && git push --tags
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
