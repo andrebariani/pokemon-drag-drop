@@ -10,8 +10,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatListModule } from '@angular/material/list';
 
 import { DndModule } from 'ngx-drag-drop';
 
@@ -48,6 +50,8 @@ import { SnackBarComponent } from './material/snackbar/snack-bar.component';
     MatToolbarModule,
     MatGridListModule,
     MatSnackBarModule,
+    MatListModule,
+    MatInputModule,
     FormsModule,
     AppRoutingModule,
   ],
