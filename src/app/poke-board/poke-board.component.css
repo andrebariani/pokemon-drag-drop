@@ -1,13 +1,33 @@
+.options {
+    display: inline;
+    text-align: center;
+}
+
+.option {
+    padding: 10px;
+}
+
 .dropzone {
     padding-bottom: 500px;
     background: ghostwhite
 }
 
-.placeholder1 {
-    background: rgb(206, 238, 238);
+.poke-board {
     border-radius: 2px;
     padding: 20px;
     margin-bottom: 10px;
+    height: 300px;
+    overflow-y: scroll;
+}
+
+.forest {
+    background-color: chartreuse;
+    background-image: url(../../assets/backgrounds/forest-bg.png);
+}
+
+.water {
+    background-color: aquamarine;
+    background-image: url(../../assets/backgrounds/river_bg.png);
 }
 
 .placeholder2 {

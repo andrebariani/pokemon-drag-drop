@@ -1,9 +1,10 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input, Output, Inject } from '@angular/core';
 import { PokeListService } from '../poke-list/poke-list.service';
 import { Pokemon } from '../models/pokemon.model';
 import { EventEmitter } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SnackBarComponent } from '../material/snackbar/snack-bar.component';
+import { NestedListPokemon } from '../models/nested-list-pokemon.model';
 
 @Component({
   selector: 'app-poke-safari',
@@ -12,7 +13,11 @@ import { SnackBarComponent } from '../material/snackbar/snack-bar.component';
 })
 export class PokeSafariComponent implements OnInit {
 
-  afterBattleMsg: string;
+  afterBattle = {
+    message: "",
+    pokemon: new Pokemon(),
+    img: ""
+  };
   battleMsg: string;
   escapedMsg =  [
     "Oh no! The Pokémon broke free!",
@@ -26,20 +31,8 @@ export class PokeSafariComponent implements OnInit {
   eating: number;
   catchRate: number;
 
-  @Output() capturedPokemon: EventEmitter<Pokemon> = new EventEmitter<Pokemon>();
-
-  constructor(private pokeListService: PokeListService, private snackBar: MatSnackBar) { }
-
-  ngOnInit() {
-    this.pokeListService.getPokemons().subscribe({
-      next: pokemons => { this.allPokemons = pokemons },
-      error: err => "Uh oh..."
-    });
-  }
-
-  start() {
-    this.afterBattleMsg = "";
-    this.wildPokemon = this.allPokemons[Math.floor(Math.random() * this.allPokemons.length)];
+  constructor(private dialogRef: MatDialogRef<PokeSafariComponent>, @Inject(MAT_DIALOG_DATA) data) { 
+    this.wildPokemon = data.wildPokemon;
 
     this.battleMsg = "A Wild " + this.wildPokemon.name.english + " appears! What will you do?";
 
@@ -48,12 +41,17 @@ export class PokeSafariComponent implements OnInit {
     this.catchRate = 250 / 3;
   }
 
+  ngOnInit() { }
+
   run() {
-    this.afterBattleMsg = "You've ran away!";
-    this.wildPokemon = null;
+    this.afterBattle.message = "You've ran away!";
+    this.afterBattle.pokemon = null;
+
+    this.closeDialog();
+    this.dialogRef.close(this.afterBattle);
   }
 
-  didPokemonRan() {
+  didPokemonRan(): boolean {
     let runProb: number = 0;
     let escaped = false;
     if (this.eating) {
@@ -74,16 +72,10 @@ export class PokeSafariComponent implements OnInit {
     }
 
     if (escaped) {
-      this.afterBattleMsg = this.wildPokemon.name.english + " ran away !";
-      this.wildPokemon = null;
+      this.afterBattle.message = this.wildPokemon.name.english + " ran away !";
+      this.afterBattle.pokemon = null;
 
-      this.snackBar.openFromComponent(SnackBarComponent, {
-        duration: 5000,
-        data: { 
-          isCaptured: false,
-          message: this.afterBattleMsg
-        }
-      });
+      this.dialogRef.close(this.afterBattle);
 
       return true;
     }
@@ -120,21 +112,14 @@ export class PokeSafariComponent implements OnInit {
       }
     }
     
-    this.capturedPokemon.emit(this.wildPokemon)
-    this.afterBattleMsg = "You've captured " + this.wildPokemon.name.english + "!";
-    this.wildPokemon = null;
+    this.afterBattle.message = "You've captured " + this.wildPokemon.name.english + "!";
+    this.afterBattle.pokemon = this.wildPokemon;
+    this.afterBattle.img = `assets/sprites/${('000' + this.wildPokemon.id).substr(-3)}MS.png`;
 
-    let snackBarRef = this.snackBar.openFromComponent(SnackBarComponent, {
-      duration: 5000,
-      data: { 
-        isCaptured: true,
-        message: this.afterBattleMsg
-      }
-    });
-
-    snackBarRef.onAction().subscribe(() => {
-      console.log("miau");
-    });
+    this.closeDialog();
   }
 
+  closeDialog() {
+    this.dialogRef.close(this.afterBattle);
+  }
 }
