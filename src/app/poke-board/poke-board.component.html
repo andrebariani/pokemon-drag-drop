@@ -1,7 +1,6 @@
 <div class="options">
     <button (click)="save()" [disabled]="pokemonBoard.length == 0" class="option">save</button>
 
-    <span class="option">Insert Here</span>
     <mat-form-field class="option">
         <mat-label>Box Background</mat-label>
         <mat-select [(value)]="bgSelected">
@@ -10,23 +9,28 @@
         </mat-select>
     </mat-form-field>
 
-    <mat-list style="padding: 12px;"
+    <div style="padding: 15px;" class="dragBox" [dndDraggable]="pokeBox" [dndEffectAllowed]="'all'" [dndDisableIf]="false" [dndType]="'pokeBox'">
+        <div class="card">
+            <div class="card-header">
+                <span>PokéBox</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="release"
                 dndDropzone
                 dndEffectAllowed="move"
                 (dndDrop)="onDrop($event)">
 
-    </mat-list>
-</div>
-
-<div class="dragBox" [dndDraggable]="pokeBox" [dndEffectAllowed]="'all'" [dndDisableIf]="false" [dndType]="'pokeBox'">
-    <div class="card">
-        <div class="card-header">
-            <span>PokéBox</span>
-        </div>
     </div>
 </div>
 
 <div class="layout-padding">
+    <div [className]="'poke-board ' +  bgSelected" dndDropzone (dndDrop)="onDrop($event, pokemonBoard)"
+        [dndDropzone]="dropzoneTypes">
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemonBoard }"></ng-container>
+    </div>
+
     <ng-template #recursiveList let-list>
 
         <mat-card dndPlaceholderRef class="placeholder2">
@@ -56,12 +60,10 @@
             </div>
         </div>
     </ng-template>
-
-    <div [className]="'poke-board ' +  bgSelected" dndDropzone (dndDrop)="onDrop($event, pokemonBoard)"
-        [dndDropzone]="dropzoneTypes">
-        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemonBoard }"></ng-container>
-    </div>
 </div>
 
-<p>Welcome to the Pokemon Safari!</p>
-<button (click)="start()">Click me to start!</button>
+<div style="display: inline;">
+    <p>Welcome to the Pokemon Safari!</p>
+    <button (click)="start()">Click me to start!</button>
+    <button (click)="addPokemon()">Add Pokemon to board</button>
+</div>
