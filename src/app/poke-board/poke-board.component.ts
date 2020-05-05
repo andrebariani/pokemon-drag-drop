@@ -114,6 +114,10 @@ export class PokeBoardComponent implements OnInit {
     );
   }
 
+  addPokemon() {
+    this.pokemonBoard.push({content: this.allPokemons[Math.floor(Math.random() * this.allPokemons.length)]});
+  }
+
   save(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       duration: 5000,
