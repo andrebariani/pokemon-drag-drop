@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.dragBox {
+    padding: 15px;
+}
+
+
 .option {
     padding: 10px;
 }
@@ -44,12 +49,33 @@
 }
 
 .placeholder2 {
-background: rgb(38, 228, 228);
-border-radius: 2px;
-padding: 20px;
-margin-bottom: 10px;
+    background: rgb(38, 228, 228);
+    border-radius: 2px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.card-poke {
+    width:fit-content; 
+    font-weight: 100;
+}
+
+.card-poke-header {
+    display: inline;
+}
+
+.image {
+    display: inline; position: relative;
+}
+
+.name {
+    display: inline;
 }
 
 .poke-board-header {
     margin: 0%;
+}
+
+.safari {
+    display: inline;
 }

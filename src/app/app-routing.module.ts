@@ -6,7 +6,7 @@ import { PokeBoardComponent } from './poke-board/poke-board.component';
 const routes: Routes =[
   {path: 'poke-list', component: PokeListComponent},
   {path: 'poke-board', component: PokeBoardComponent},
-  { path: '', redirectTo: '/poke-list', pathMatch: 'full' },
+  { path: '', redirectTo: '/poke-board', pathMatch: 'full' },
 ];
 
 @NgModule({
