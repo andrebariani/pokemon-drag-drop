@@ -1,0 +1,69 @@
+<div class="options">
+    <button (click)="save()" [disabled]="pokemonBoard.length == 0" class="option">save</button>
+
+    <mat-form-field class="option">
+        <mat-label>Box Background</mat-label>
+        <mat-select [(value)]="bgSelected">
+            <mat-option value="forest">Forest</mat-option>
+            <mat-option value="water">Water</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div class="dragBox" [dndDraggable]="pokeBox" [dndEffectAllowed]="'all'" [dndDisableIf]="false" [dndType]="'pokeBox'">
+        <div class="card">
+            <div class="card-header">
+                <span>PokéBox</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="release"
+                dndDropzone
+                dndEffectAllowed="move"
+                (dndDrop)="onDrop($event)">
+
+    </div>
+</div>
+
+<div class="layout-padding">
+    <div [className]="'poke-board ' +  bgSelected" dndDropzone (dndDrop)="onDrop($event, pokemonBoard)"
+        [dndDropzone]="dropzoneTypes">
+        <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemonBoard }"></ng-container>
+    </div>
+
+    <ng-template #recursiveList let-list>
+
+        <mat-card dndPlaceholderRef class="placeholder2">
+        </mat-card>
+
+        <div *ngFor="let pokemon of list" [dndDraggable]="pokemon" dndEffectAllowed="move"
+            [dndDisableIf]="pokemon.disable" [dndType]="pokemon.children ? dropzoneTypes[1] : dropzoneTypes[0]"
+            (dndMoved)="onDragged(pokemon, list, 'move')">
+
+            <div class="card card-poke" *ngIf="!pokemon.children">
+                <div class="card-header card-poke-header">
+                    <img class="image"
+                        src="assets/sprites/{{('000' + pokemon.content.id).substr(-3)}}MS.png">
+                    <p class="name">{{pokemon.content.name.english}}</p>
+                </div>
+            </div>
+
+            <div class="card card-box" *ngIf="pokemon.children">
+                <div class="card-header">
+                    <input matInput [(ngModel)]="pokemon.label" placeholder="New PokéBox" />
+                </div>
+                <div class="card-body" dndDropzone (dndDrop)="onDrop($event, pokemon.children)"
+                    [dndHorizontal]="pokemon.children ? true : false" [dndDropzone]="[dropzoneTypes[0]]">
+                    <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemon.children }">
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</div>
+
+<div>
+    <p>Welcome to the Pokemon Safari!</p>
+    <button (click)="start()">Click me to start!</button>
+    <button (click)="addPokemon()">Add Pokemon to board</button>
+</div>
