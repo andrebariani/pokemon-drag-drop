@@ -9,7 +9,7 @@
         </mat-select>
     </mat-form-field>
 
-    <div style="padding: 15px;" class="dragBox" [dndDraggable]="pokeBox" [dndEffectAllowed]="'all'" [dndDisableIf]="false" [dndType]="'pokeBox'">
+    <div class="dragBox" [dndDraggable]="pokeBox" [dndEffectAllowed]="'all'" [dndDisableIf]="false" [dndType]="'pokeBox'">
         <div class="card">
             <div class="card-header">
                 <span>PokéBox</span>
@@ -40,15 +40,15 @@
             [dndDisableIf]="pokemon.disable" [dndType]="pokemon.children ? dropzoneTypes[1] : dropzoneTypes[0]"
             (dndMoved)="onDragged(pokemon, list, 'move')">
 
-            <div style="width:fit-content; font-weight: 100;" class="card" *ngIf="!pokemon.children">
-                <div class="card-header" style="display: inline;">
-                    <img style="display: inline; position: relative;"
+            <div class="card card-poke" *ngIf="!pokemon.children">
+                <div class="card-header card-poke-header">
+                    <img class="image"
                         src="assets/sprites/{{('000' + pokemon.content.id).substr(-3)}}MS.png">
-                    <p style="display: inline;">{{pokemon.content.name.english}}</p>
+                    <p class="name">{{pokemon.content.name.english}}</p>
                 </div>
             </div>
 
-            <div class="card" *ngIf="pokemon.children">
+            <div class="card card-box" *ngIf="pokemon.children">
                 <div class="card-header">
                     <input matInput [(ngModel)]="pokemon.label" placeholder="New PokéBox" />
                 </div>
@@ -62,7 +62,7 @@
     </ng-template>
 </div>
 
-<div style="display: inline;">
+<div>
     <p>Welcome to the Pokemon Safari!</p>
     <button (click)="start()">Click me to start!</button>
     <button (click)="addPokemon()">Add Pokemon to board</button>
