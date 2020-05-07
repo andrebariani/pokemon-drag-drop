@@ -127,5 +127,10 @@
   "defaultProject": "ProtoDnD",
   "cli": {
     "analytics": false
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
   }
 }

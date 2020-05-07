@@ -24,10 +24,13 @@
     background-color: #f5f5f5;
     height: 90%;
     max-height: 90%;
-    min-width: 600px;
+    min-width: 400px;
     border: dotted #ddd 2px;
     position: relative;
     overflow: hidden;
+    opacity: 0.5;
+    color: black;
+    text-align: center;
 }
 
 .poke-board {
@@ -53,12 +56,18 @@
     border-radius: 2px;
     padding: 20px;
     margin-bottom: 10px;
+    min-width: 120px;
 }
 
 .card-poke {
     width:fit-content; 
     font-weight: 100;
     display: flex;
+}
+
+
+.card-box {
+    max-width: 500px;
 }
 
 .card-poke-header {

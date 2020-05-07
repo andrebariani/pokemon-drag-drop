@@ -11,13 +11,14 @@ import { PokeListService } from '../poke-list/poke-list.service';
 @Component({
   selector: 'app-poke-board',
   templateUrl: './poke-board.component.html',
-  styleUrls: ['./poke-board.component.css']
+  styleUrls: ['./poke-board.component.scss']
 })
 export class PokeBoardComponent implements OnInit {
 
   allPokemons: Array<Pokemon>
 
-  pokeBox: NestedListPokemon = {content: new Pokemon(), label: "", children: []};
+  pokeBoxVert: NestedListPokemon = {content: new Pokemon(), type: "vert", label: "Vertical", children: []};
+  pokeBoxHor: NestedListPokemon = {content: new Pokemon(), type: "hor", label: "Horizontal", children: []};
   pokemonBoard: Array<NestedListPokemon> = [];
   storageKey = 'pokeboard';
 
