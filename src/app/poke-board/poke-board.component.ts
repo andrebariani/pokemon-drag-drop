@@ -63,18 +63,19 @@ export class PokeBoardComponent implements OnInit {
   }
 
   onDrop(event: DndDropEvent, list?: any[], effect?: DropEffect) {
-    let index = event.index;
-    if (typeof index === 'undefined') {
-      index = list.length;
-    }
+    if(list) {
+      let index = event.index;
+      if (typeof index === 'undefined' && list) {
+        index = list.length;
+      }
 
-    if(typeof event.data.content === 'undefined') {
-      let newPoke = {content: event.data};
-      list.splice( index, 0, newPoke );
-    } else {
-      list.splice( index, 0, event.data );
+      if(typeof event.data.content === 'undefined') {
+        let newPoke = {content: event.data};
+        list.splice( index, 0, newPoke );
+      } else {
+        list.splice( index, 0, event.data );
+      }
     }
-    
   }
 
   start() {

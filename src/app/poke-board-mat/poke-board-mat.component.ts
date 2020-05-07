@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { DndDropEvent, DropEffect } from 'ngx-drag-drop';
 
@@ -7,6 +7,7 @@ import { NestedListPokemon } from '../models/nested-list-pokemon.model';
 import { PokeSafariComponent } from '../poke-safari/poke-safari.component';
 import { SnackBarComponent } from '../material/snackbar/snack-bar.component';
 import { PokeListService } from '../poke-list/poke-list.service';
+import { CdkDropList, CdkDropListContainer, CdkDropListGroup, moveItemInArray, CdkDrag, CdkDragDrop, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-poke-board-mat',
@@ -14,6 +15,8 @@ import { PokeListService } from '../poke-list/poke-list.service';
   styleUrls: ['./poke-board-mat.component.css']
 })
 export class PokeBoardMatComponent implements OnInit {
+  // @ViewChild(CdkDropListGroup) listGroup: CdkDropListGroup<CdkDropList>;
+  // @ViewChild(CdkDropList) placeholder: CdkDropList;
 
   allPokemons: Array<Pokemon>
 
@@ -27,6 +30,13 @@ export class PokeBoardMatComponent implements OnInit {
   bgSelected = 'forest';
 
   constructor(private pokeListService: PokeListService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+
+  // ngAfterViewInit() {
+  //   let phElement = this.placeholder.element.nativeElement;
+
+  //   phElement.style.display = 'none';
+  //   phElement.parentNode.removeChild(phElement);
+  // }
 
   ngOnInit() { 
     this.pokeListService.getPokemons().subscribe( {
@@ -54,28 +64,74 @@ export class PokeBoardMatComponent implements OnInit {
     }
   }
 
-  onDragged(item: any, list?: any[], effect?: DropEffect) {
-    if( effect === "move" ) {
-      const index = list.indexOf( item );
-
-      list.splice( index, 1 );
-    }
-  }
-
-  onDrop(event: DndDropEvent, list?: any[], effect?: DropEffect) {
-    let index = event.index;
-    if (typeof index === 'undefined') {
-      index = list.length;
-    }
-
-    if(typeof event.data.content === 'undefined') {
-      let newPoke = {content: event.data};
-      list.splice( index, 0, newPoke );
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
-      list.splice( index, 0, event.data );
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
     }
-    
   }
+
+  // public target: CdkDropList;
+  // public targetIndex: number;
+  // public source: CdkDropListContainer;
+  // public sourceIndex: number;
+
+  // drop() {
+  //   if (!this.target)
+  //     return;
+
+  //   let phElement = this.placeholder.element.nativeElement;
+  //   let parent = phElement.parentNode;
+
+  //   phElement.style.display = 'none';
+
+  //   parent.removeChild(phElement);
+  //   parent.appendChild(phElement);
+  //   parent.insertBefore(this.source.element.nativeElement, parent.children[this.sourceIndex]);
+
+  //   this.target = null;
+  //   this.source = null;
+
+  //   if (this.sourceIndex != this.targetIndex) moveItemInArray(this.pokemonBoard, this.sourceIndex, this.targetIndex);
+  // }
+
+  // enter = (drag: CdkDrag, drop: CdkDropList) => {
+  //   if (drop == this.placeholder)
+  //     return true;
+
+  //   let phElement = this.placeholder.element.nativeElement;
+  //   let dropElement = drop.element.nativeElement;
+
+  //   let dragIndex = __indexOf(dropElement.parentNode.children, drag.dropContainer.element.nativeElement);
+  //   let dropIndex = __indexOf(dropElement.parentNode.children, dropElement);
+
+  //   if (!this.source) {
+  //     this.sourceIndex = dragIndex;
+  //     this.source = drag.dropContainer;
+
+  //     let sourceElement = this.source.element.nativeElement;
+  //     phElement.style.width = sourceElement.clientWidth + 'px';
+  //     phElement.style.height = sourceElement.clientHeight + 'px';
+      
+  //     sourceElement.parentNode.removeChild(sourceElement);
+  //   }
+
+  //   this.targetIndex = dropIndex;
+  //   this.target = drop;
+
+  //   phElement.style.display = '';
+  //   dropElement.parentNode.insertBefore(phElement, (dragIndex < dropIndex)
+  //     ? dropElement.nextSibling : dropElement);
+
+  //   this.source.start();
+  //   this.placeholder.enter(drag, drag.element.nativeElement.offsetLeft, drag.element.nativeElement.offsetTop);
+
+  //   return false;
+  // }
 
   start() {
     const dialogConfig = new MatDialogConfig();
@@ -130,3 +186,7 @@ export class PokeBoardMatComponent implements OnInit {
     console.log(JSON.parse(atob(localStorage.getItem(this.storageKey))));
   }
 }
+
+function __indexOf(collection, node) {
+  return Array.prototype.indexOf.call(collection, node);
+};

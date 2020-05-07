@@ -52,8 +52,8 @@
                 <div class="card-header">
                     <input matInput [(ngModel)]="pokemon.label" placeholder="New PokéBox" />
                 </div>
-                <div class="card-body" dndDropzone (dndDrop)="onDrop($event, pokemon.children)"
-                    [dndHorizontal]="pokemon.children ? true : false" [dndDropzone]="[dropzoneTypes[0]]">
+                <div class="card-body" style="display: flex; flex-wrap: wrap;" dndDropzone (dndDrop)="onDrop($event, pokemon.children)"
+                     [dndDropzone]="[dropzoneTypes[0]]">
                     <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemon.children }">
                     </ng-container>
                 </div>

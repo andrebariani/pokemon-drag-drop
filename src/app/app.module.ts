@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatListModule } from '@angular/material/list';
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 import { DndModule } from 'ngx-drag-drop';
 
@@ -54,6 +55,7 @@ import { PokeBoardMatComponent } from './poke-board-mat/poke-board-mat.component
     MatSnackBarModule,
     MatListModule,
     MatInputModule,
+    DragDropModule,
     FormsModule,
     AppRoutingModule,
   ],

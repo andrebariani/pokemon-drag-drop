@@ -34,8 +34,8 @@
     border-radius: 2px;
     padding: 20px;
     margin-bottom: 10px;
-    height: 400px;
-    overflow-y: scroll;
+    /* height: 400px;
+    overflow-y: scroll; */
 }
 
 .forest {
@@ -58,6 +58,7 @@
 .card-poke {
     width:fit-content; 
     font-weight: 100;
+    display: flex;
 }
 
 .card-poke-header {
