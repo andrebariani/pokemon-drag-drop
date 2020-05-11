@@ -24,7 +24,8 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install dependencies
-      run: npm install --save-dev @angular/cli@latest
+      run: npm ci
+      # run: npm install --save-dev @angular/cli@latest
 
     - name: Run tests
       run: npm test
@@ -32,8 +33,13 @@ jobs:
     - name: Build
       run: npm run ng -- build
 
+    - name:  'Automated Version Bump'
+      uses:  'phips28/gh-action-bump-version@master'
+      with:
+        tag-prefix:  ''
+
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
           name: pokemon-drag-drop
-          path: pokemon-drag-drop
+          path: dist/ProtoDnd
