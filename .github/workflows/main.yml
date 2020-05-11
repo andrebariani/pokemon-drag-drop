@@ -42,4 +42,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
           name: pokemon-drag-drop
-          path: ''
+          path: pokemon-drag-drop/
