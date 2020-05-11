@@ -25,19 +25,25 @@ jobs:
       run: npm ci
       # run: npm install --save-dev @angular/cli@latest
 
-    - name: Run tests
-      run: npm test
+    - name: where am I
+      run: pwd
 
-    - name: Build
-      run: npm run ng -- build
+    - name: what is this
+      run: ls
 
-    - name:  'Automated Version Bump'
-      uses:  'phips28/gh-action-bump-version@master'
-      with:
-        tag-prefix:  ''
+    #- name: Run tests
+    #  run: npm test
 
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v1
-      with:
-          name: pokemon-drag-drop
-          path: /home/runner/work/pokemon-drag-drop/dist/ProtoDnd
+    #- name: Build
+    #  run: npm run ng -- build
+
+    #- name:  'Automated Version Bump'
+    #  uses:  'phips28/gh-action-bump-version@master'
+    #  with:
+    #    tag-prefix:  ''
+
+    #- name: Upload Artifact
+    #  uses: actions/upload-artifact@v1
+    #  with:
+    #      name: pokemon-drag-drop
+    #      path: /home/runner/work/pokemon-drag-drop/dist/ProtoDnd
