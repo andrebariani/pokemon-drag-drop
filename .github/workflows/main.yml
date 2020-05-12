@@ -7,8 +7,12 @@ name: CI
 on:
   push:
     branches: [ master ]
+    paths-ignore:
+      - 'package.json'
   pull_request:
     branches: [ master ]
+    paths-ignore:
+      - 'package.json'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -20,6 +24,8 @@ jobs:
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.TOKEN_ACTION }}
 
     - name: Install dependencies
       run: npm ci
@@ -32,10 +38,11 @@ jobs:
       run: npm run ng -- build
       if: ${{github.event_name == 'push'}}  
 
-    - name:  'Automated Version Bump'
-      uses:  'phips28/gh-action-bump-version@master'
+    - name: Conventional Changelog Action
+      uses: TriPSs/conventional-changelog-action@v2
       with:
-        tag-prefix:  ''
+         github-token: ${{ secrets.TOKEN_ACTION }}
+         output-file: 'false'
       if: ${{github.event_name == 'push'}}  
 
     - name: Upload Artifact
