@@ -43,15 +43,16 @@ jobs:
       with:
          github-token: ${{ secrets.TOKEN_ACTION }}
          output-file: 'false'
+         git-message: 'bump: {version}'
       #if: ${{github.event_name == 'push'}}  
 
     - name: ls
-      run: echo ${{steps.changelog.outputs.version}}
+      run: echo steps.changelog.outputs.version
       #if: ${{github.event_name == 'push'}}  
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
-          name: pokemon-drag-drop
+          name: ${{'pokemon-drag-drop' + steps.changelog.outputs.version}}
           path: dist/
       #if: ${{github.event_name == 'push'}}  
