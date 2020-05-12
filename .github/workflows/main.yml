@@ -53,6 +53,6 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
-          name: ${{'pokemon-drag-drop' + steps.changelog.outputs.version}}
+          name: 'pokemon-drag-drop{version}'
           path: dist/
       #if: ${{github.event_name == 'push'}}  
