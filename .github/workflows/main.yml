@@ -29,6 +29,8 @@ jobs:
 
     - name: CD to frontend
       run: cd frontend/
+    - name: a
+      run: ls
 
     - name: Install dependencies
       run: npm ci
