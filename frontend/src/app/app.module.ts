@@ -26,7 +26,6 @@ import { PokeSafariComponent } from './poke-safari/poke-safari.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PokeDetailComponent } from './poke-detail/poke-detail.component';
 import { SnackBarComponent } from './material/snackbar/snack-bar.component';
-import { PokeBoardMatComponent } from './poke-board-mat/poke-board-mat.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,6 @@ import { PokeBoardMatComponent } from './poke-board-mat/poke-board-mat.component
     PokeSafariComponent,
     PokeDetailComponent,
     SnackBarComponent,
-    PokeBoardMatComponent
   ],
   imports: [
     BrowserModule,

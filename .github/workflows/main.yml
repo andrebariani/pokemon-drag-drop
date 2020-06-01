@@ -27,6 +27,9 @@ jobs:
       with:
         token: ${{ secrets.TOKEN_ACTION }}
 
+    - name: CD to frontend
+      run: cd frontend
+
     - name: Install dependencies
       run: npm ci
       # run: npm install --save-dev @angular/cli@latest

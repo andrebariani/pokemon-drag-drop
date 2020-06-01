@@ -11,6 +11,7 @@
 
 .option {
     padding: 10px;
+    margin: 0px 10px;
 }
 
 .dropzone {
@@ -34,11 +35,9 @@
 }
 
 .poke-board {
-    border-radius: 2px;
     padding: 20px;
     margin-bottom: 10px;
-    /* height: 400px;
-    overflow-y: scroll; */
+    min-height: 300px;
 }
 
 .forest {
@@ -57,6 +56,31 @@
     padding: 20px;
     margin-bottom: 10px;
     min-width: 120px;
+}
+
+.my-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.my-card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgba(0,0,0,.03);
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.my-card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
 }
 
 .card-poke {

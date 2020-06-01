@@ -58,7 +58,6 @@ export class PokeBoardComponent implements OnInit {
   onDragged(item: any, list?: any[], effect?: DropEffect) {
     if( effect === "move" ) {
       const index = list.indexOf( item );
-
       list.splice( index, 1 );
     }
   }
