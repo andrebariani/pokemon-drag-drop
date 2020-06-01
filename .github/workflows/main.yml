@@ -38,6 +38,7 @@ jobs:
     - name: Build
       run: npm run ng -- build
       if: ${{github.event_name == 'push'}}  
+      working-directory: frontend/
 
     - name: Conventional Changelog Action
       uses: TriPSs/conventional-changelog-action@v2
