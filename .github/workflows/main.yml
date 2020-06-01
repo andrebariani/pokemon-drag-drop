@@ -28,13 +28,13 @@ jobs:
         token: ${{ secrets.TOKEN_ACTION }}
 
     - name: wai
-      run: pwd
+      run: ls
 
     - name: CD to frontend
       run: cd frontend
 
     - name: wai again
-      run: pwd
+      run: ls
 
     - name: Install dependencies
       run: npm ci
