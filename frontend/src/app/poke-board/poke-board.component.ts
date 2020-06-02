@@ -7,6 +7,7 @@ import { NestedListPokemon } from '../models/nested-list-pokemon.model';
 import { PokeSafariComponent } from '../poke-safari/poke-safari.component';
 import { SnackBarComponent } from '../material/snackbar/snack-bar.component';
 import { PokeListService } from '../poke-list/poke-list.service';
+import { GeneratePokeService } from '../generate-poke.service';
 
 @Component({
   selector: 'app-poke-board',
@@ -27,7 +28,8 @@ export class PokeBoardComponent implements OnInit {
 
   bgSelected = 'forest';
 
-  constructor(private pokeListService: PokeListService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private pokeListService: PokeListService, private generatePoke: GeneratePokeService,
+       private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() { 
     this.pokeListService.getPokemons().subscribe( {
@@ -119,6 +121,32 @@ export class PokeBoardComponent implements OnInit {
     this.pokemonBoard.push({content: this.allPokemons[Math.floor(Math.random() * this.allPokemons.length)]});
   }
 
+  downloadFile(response: Blob) {
+    const dataType = response.type;
+    const binaryData = [];
+    binaryData.push(response);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: dataType }));
+    downloadLink.download = 'captured-pokemons.zip';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    downloadLink.parentNode.removeChild(downloadLink);
+  }
+
+  downloadPokemon() {
+    const downloadPB = this.pokemonBoard
+    localStorage.setItem(this.storageKey, btoa(JSON.stringify(this.pokemonBoard)));
+
+    this.generatePoke.download(downloadPB).subscribe({
+      next: response => {
+        this.downloadFile(response);
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+  }
+
   save(): void {
     this.snackBar.openFromComponent(SnackBarComponent, {
       duration: 5000,
@@ -128,6 +156,5 @@ export class PokeBoardComponent implements OnInit {
       }
     });
     localStorage.setItem(this.storageKey, btoa(JSON.stringify(this.pokemonBoard)));
-    console.log(JSON.parse(atob(localStorage.getItem(this.storageKey))));
   }
 }

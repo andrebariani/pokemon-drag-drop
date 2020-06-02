@@ -8,6 +8,9 @@
     padding: 15px;
 }
 
+.highlight {
+    background-color: red($color: #000000);
+}
 
 .option {
     padding: 10px;
@@ -78,6 +81,20 @@
 }
 
 .my-card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+}
+
+.my-card-body-hor {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1.25rem;
+    display: flex; 
+    flex-wrap: wrap;
+}
+
+.my-card-body-vert {
     flex: 1 1 auto;
     min-height: 1px;
     padding: 1.25rem;

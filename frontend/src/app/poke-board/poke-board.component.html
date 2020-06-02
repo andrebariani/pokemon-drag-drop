@@ -60,7 +60,7 @@
                 <div class="my-card-header">
                     <input matInput [(ngModel)]="pokemon.label" placeholder="Nova PokeBox Vertical" />
                 </div>
-                <div class="my-card-body" dndDropzone (dndDrop)="onDrop($event, pokemon.children)"
+                <div class="my-card-body-vert" dndDropzone (dndDrop)="onDrop($event, pokemon.children)"
                     [dndDropzone]="[dropzoneTypes[0]]">
                     <ng-container
                         *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemon.children, form: 'base' }">
@@ -72,7 +72,7 @@
                 <div class="my-card-header">
                     <input matInput [(ngModel)]="pokemon.label" placeholder="Nova PokeBox Horizontal" />
                 </div>
-                <div class="my-card-body" style="display: flex; flex-wrap: wrap;" dndDropzone
+                <div class="my-card-body-hor" dndDropzone
                     (dndDrop)="onDrop($event, pokemon.children)" [dndDropzone]="[dropzoneTypes[0]]">
                     <ng-container
                         *ngTemplateOutlet="recursiveList; context:{ $implicit: pokemon.children, form: 'base' }">
@@ -86,4 +86,5 @@
 <div class="options">
     <button (click)="start()" class="option">Hunt for new Pokemon!</button>
     <button (click)="addPokemon()" class="option">Add Pokemon to board</button>
+    <button (click)="downloadPokemon()" class="option highlight">Download Pokemons!</button>
 </div>
