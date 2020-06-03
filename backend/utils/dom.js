@@ -1,6 +1,5 @@
 const _ = require('lodash');
 const functions = require('./functions');
-const ts = require('typescript');
 
 class DomUtils {
 

@@ -3,13 +3,10 @@ const htmlModule = require('html');
 const jsdom = require("jsdom");
 const path = require('path');
 const zipper = require('zip-local');
-const beautify = require('js-beautify').js;
-const ts = require('typescript');
 
-
-const InterfaceModel = require('pokemon');
-const DomUtils = require('utils/dom');
-const tsFunctions = require('utils/functions');
+const PokemonModel = require('./pokemon');
+const DomUtils = require('./utils/dom');
+const functions = require('./utils/functions');
 
 class CodeService {
     constructor() {
@@ -17,15 +14,17 @@ class CodeService {
         this.$root = this.dom.window.document.documentElement;
         this.$body = this.dom.window.document.body;
         this.domUtils = new DomUtils(this.dom);
+        this.generatedFile;
     }
 
-    generateComponentToDownload(bodyFromReq, _callback) {
+    generateToDownload(bodyFromReq, _callback) {
         let pokemonsFromReq = new PokemonModel(bodyFromReq.pokemons);
         let pokemons = pokemonsFromReq.pokemons;
 
-        return this.generateComponentFiles(pokemons)
+        return this.generateFiles(pokemons)
             .then(_ => {
                 this.zipComponent();
+                this.generatedFile = atob(fs.readFileSync('./captured-pokemons.zip'));
                 _callback();
             })
             .then(() => {
@@ -43,11 +42,10 @@ class CodeService {
             .catch(err => {
                 throw err;
             });
-        ;
     }
 
     generateFiles(pokemons) {
-        fs.mkdirSync('resources/generated-component', { recursive: true });
+        fs.mkdirSync('resources/captured-pokemons', { recursive: true });
         return Promise.all([
             this.generateHtml(pokemons),
             this.generateCss(),
@@ -65,7 +63,7 @@ class CodeService {
                 let linkCssNode = {
                     tag: 'link',
                     props: {
-                        href: "forms.component.css",
+                        href: "stylesheet.css",
                         type: "text/css",
                         rel: "stylesheet"
                     },
@@ -74,7 +72,7 @@ class CodeService {
                 let script = {
                     tag: 'script',
                     props: {
-                        src: "formsValidation.js",
+                        src: "function.js",
                         type: "text/javascript"
                     },
                     children: []
@@ -94,7 +92,7 @@ class CodeService {
 
     generateCss() {
         return new Promise((resolve, reject) => {
-            fs.copyFile('./src/resources/src-codes/forms/forms.component.css', './src/resources/generated-component/forms/forms.component.css', function (err) {
+            fs.copyFile('./templates/stylesheet.css', './resources/captured-pokemons/stylesheet.css', function (err) {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -108,9 +106,14 @@ class CodeService {
 
     generateFunctionsJs() {
         return new Promise((resolve, reject) => {
-            for (let [key, value] of Object.entries(functions)) {
-                fs.appendFileSync('resources/captured-pokemons/function.js', value);
+            try {
+                for (let [key, value] of Object.entries(functions)) {
+                    fs.appendFileSync('resources/captured-pokemons/function.js', value);
+                }
+            } catch (err) {
+                reject(err);
             }
+            resolve();
         });
     }
 
@@ -118,3 +121,5 @@ class CodeService {
         zipper.sync.zip("resources/captured-pokemons").compress().save("captured-pokemons.zip");
     }
 }
+
+module.exports = CodeService;

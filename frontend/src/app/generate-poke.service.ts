@@ -12,7 +12,9 @@ export class GeneratePokeService {
   constructor(private http: HttpClient) { }
 
   download(pokemons: Array<NestedListPokemon>): Observable<Blob> {
-    const pokes = JSON.stringify(pokemons);
+    const pokes = JSON.stringify({
+      pokemons: pokemons
+    });
 
     console.log(pokes);
 
