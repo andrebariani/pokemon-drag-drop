@@ -24,7 +24,7 @@ class CodeService {
         return this.generateFiles(pokemons)
             .then(_ => {
                 this.zipComponent();
-                this.generatedFile = atob(fs.readFileSync('./captured-pokemons.zip'));
+                this.generatedFile = Buffer.from(fs.readFileSync('./captured-pokemons.zip')).toString('base64');
                 _callback();
             })
             .then(() => {
@@ -57,7 +57,7 @@ class CodeService {
             try {
                 pokemons.forEach((poke) => {
                     let node = this.domUtils.getNode(poke);
-                    this.domUtils.updateElement(this.$body.firstChild, node);
+                    this.domUtils.updateElement(this.$body, node);
                 });
 
                 let linkCssNode = {
@@ -118,7 +118,7 @@ class CodeService {
     }
 
     zipComponent() {
-        zipper.sync.zip("resources/captured-pokemons").compress().save("captured-pokemons.zip");
+        this.generatedFile = zipper.sync.zip("resources/captured-pokemons").compress().save("captured-pokemons.zip");
     }
 }
 

@@ -3,18 +3,24 @@ const CodeService = require('./codeService');
 
 module.exports.handler = async event => {
   const codeService = new CodeService();
-  console.log(JSON.parse(event));
-  codeService.generateToDownload(JSON.parse(event), () => {
-    return {
-      statusCode: 200,
-      body: JSON.stringify(
-        {
-          message: 'Go Serverless v1.0! Your function executed successfully!',
-          input: event,
-          output: CodeService.generatedFile,
-          type: 'application/zip'
-        }
-      ),
-    };
-  });
+  let res = {};
+  try {
+    await codeService.generateToDownload(event, () => {
+      res = {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/zip',
+        },
+        isBase64Encoded: 'true',
+        body: codeService.generatedFile
+      };
+    });
+  } catch(err) {
+    res = {
+      statusCode: 500,
+      message: 'Internal Server Error',
+      errorMessage: err,
+    }
+  }
+  return res;
 };

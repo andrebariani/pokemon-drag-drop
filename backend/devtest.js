@@ -4,6 +4,7 @@ const fs = require('fs');
 
 module.exports.devtest = function () {
     let req = require('./POKE.json');
-    let res = Handler.handler(req);
-    console.log("The results are in!", res);
+    Handler.handler(req).then((res) => {
+        fs.appendFileSync('resources/result.JSON', JSON.stringify(res));
+    });
 };
