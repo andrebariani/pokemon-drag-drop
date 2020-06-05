@@ -124,12 +124,18 @@ export class PokeBoardComponent implements OnInit {
 
   downloadFile(response) {
     const dataType = response.type;
+    //////////////////////////////////////////////////
+    // SHAME ZONE START HERE
+    //////////////////////////////////////////////////
     const byteCharacters = atob(response.body);
     const byteNumbers = new Array(byteCharacters.length);
     for (let i = 0; i < byteCharacters.length; i++) {
         byteNumbers[i] = byteCharacters.charCodeAt(i);
     }
     const binaryData = new Uint8Array(byteNumbers);
+    //////////////////////////////////////////////////
+    // SHAME ZONE ENDS HERE
+    //////////////////////////////////////////////////
     const downloadLink = document.createElement('a');
     downloadLink.href = window.URL.createObjectURL(new Blob([binaryData], {type: dataType}));
     downloadLink.download = 'captured-pokemons.zip';
