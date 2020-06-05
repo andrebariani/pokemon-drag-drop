@@ -12,7 +12,8 @@ module.exports.handler = async event => {
           'Content-Type': 'application/zip',
         },
         isBase64Encoded: 'true',
-        body: codeService.generatedFile
+        body: codeService.generatedFile,
+        type: 'html'
       };
     });
   } catch(err) {

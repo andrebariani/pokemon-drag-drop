@@ -16,6 +16,7 @@ import { GeneratePokeService } from '../generate-poke.service';
 })
 export class PokeBoardComponent implements OnInit {
 
+  resultJSON = 'assets/result.JSON'
   allPokemons: Array<Pokemon>
 
   pokeBoxVert: NestedListPokemon = {content: new Pokemon(), type: "vert", label: "Vertical", children: []};
@@ -40,7 +41,7 @@ export class PokeBoardComponent implements OnInit {
     if (localStorage.getItem(this.storageKey) && JSON.parse(atob(localStorage.getItem(this.storageKey))).length !== 0) {
       this.pokemonBoard = JSON.parse(atob(localStorage.getItem(this.storageKey)));
       this.snackBar.openFromComponent(SnackBarComponent, {
-        duration: 5000,
+        duration: 1,
         data: {
           isCaptured: false,
           message: "pokeBoard restored!"
@@ -121,20 +122,35 @@ export class PokeBoardComponent implements OnInit {
     this.pokemonBoard.push({content: this.allPokemons[Math.floor(Math.random() * this.allPokemons.length)]});
   }
 
-  downloadFile(response: Blob) {
+  downloadFile(response) {
     const dataType = response.type;
-    const binaryData = [];
-    binaryData.push(response);
+    const byteCharacters = atob(response.body);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const binaryData = new Uint8Array(byteNumbers);
     const downloadLink = document.createElement('a');
-    downloadLink.href = window.URL.createObjectURL(new Blob(binaryData, { type: dataType }));
+    downloadLink.href = window.URL.createObjectURL(new Blob([binaryData], {type: dataType}));
     downloadLink.download = 'captured-pokemons.zip';
     document.body.appendChild(downloadLink);
     downloadLink.click();
     downloadLink.parentNode.removeChild(downloadLink);
   }
 
+  downloadPokemonJSON() {
+    this.pokeListService.getJSON(this.resultJSON).subscribe( {
+      next: response => {
+        this.downloadFile(response);
+      },
+      error: err => {
+        console.error(err);
+      }
+    });
+  }
+
   downloadPokemon() {
-    const downloadPB = this.pokemonBoard
+    const downloadPB = this.pokemonBoard;
     localStorage.setItem(this.storageKey, btoa(JSON.stringify(this.pokemonBoard)));
 
     this.generatePoke.download(downloadPB).subscribe({

@@ -12,6 +12,14 @@ export class PokeListService {
   private dataUrl = 'assets/pokedex.json'
   constructor(private http: HttpClient) { }
 
+  getJSON(key: string): Observable<any> {
+    return this.http.get<any>(key)
+      .pipe(
+        tap(data => console.log("Fetched JSON")),
+        catchError(this.handleError)
+      );
+  }
+
   getPokemons(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>(this.dataUrl)
       .pipe(
