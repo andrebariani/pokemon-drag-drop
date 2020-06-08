@@ -13,7 +13,7 @@ module.exports.handler = async event => {
         },
         isBase64Encoded: 'true',
         body: codeService.generatedFile,
-        type: 'html'
+        type: 'html/css'
       };
     });
   } catch(err) {

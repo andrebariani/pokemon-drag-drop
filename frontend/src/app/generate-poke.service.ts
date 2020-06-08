@@ -9,6 +9,8 @@ import { catchError } from 'rxjs/operators';
 })
 export class GeneratePokeService {
 
+  APIendpoint: string = 'http://127.0.0.1:3000/'; 
+
   constructor(private http: HttpClient) { }
 
   download(pokemons: Array<NestedListPokemon>): Observable<Blob> {
@@ -16,11 +18,12 @@ export class GeneratePokeService {
       pokemons: pokemons
     });
 
-    console.log(pokes);
-
-    return this.http.post('api/post', pokes,
+    return this.http.post(this.APIendpoint + '/post', pokes,
     {
-        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': 'true'  
+        }),
         responseType: 'blob'
     })
     .pipe(

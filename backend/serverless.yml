@@ -16,8 +16,8 @@ functions:
       - http:
           path: /api
           method: post
-          cors: true
+          cors: True
 
 package:
   exclude:
-    - resources/**
+    - poc-poke/**

@@ -24,11 +24,11 @@ class CodeService {
         return this.generateFiles(pokemons)
             .then(_ => {
                 this.zipComponent();
-                this.generatedFile = Buffer.from(fs.readFileSync('./captured-pokemons.zip')).toString('base64');
+                this.generatedFile = Buffer.from(fs.readFileSync('tmp/resources/captured-pokemons.zip')).toString('base64');
                 _callback();
             })
             .then(() => {
-                const directory = 'resources/captured-pokemons';
+                const directory = 'tmp/resources/';
                 fs.readdir(directory, (err, files) => {
                     if (err) throw err;
 
@@ -45,7 +45,7 @@ class CodeService {
     }
 
     generateFiles(pokemons) {
-        fs.mkdirSync('resources/captured-pokemons', { recursive: true });
+        fs.mkdirSync('tmp/resources/', { recursive: true });
         return Promise.all([
             this.generateHtml(pokemons),
             this.generateCss(),
@@ -81,7 +81,7 @@ class CodeService {
                 this.domUtils.updateElement(this.$body, linkCssNode);
 
                 let formsHtmlCode = htmlModule.prettyPrint(this.$body.innerHTML);
-                fs.appendFileSync('resources/captured-pokemons/template.html', formsHtmlCode);
+                fs.appendFileSync('resources/template.html', formsHtmlCode);
             } catch (err) {
                 console.log(err);
                 reject(err);
@@ -92,7 +92,7 @@ class CodeService {
 
     generateCss() {
         return new Promise((resolve, reject) => {
-            fs.copyFile('./templates/stylesheet.css', './resources/captured-pokemons/stylesheet.css', function (err) {
+            fs.copyFile('./templates/stylesheet.css', './resources/stylesheet.css', function (err) {
                 if (err) {
                     console.log(err);
                     reject(err);
@@ -108,7 +108,7 @@ class CodeService {
         return new Promise((resolve, reject) => {
             try {
                 for (let [key, value] of Object.entries(functions)) {
-                    fs.appendFileSync('resources/captured-pokemons/function.js', value);
+                    fs.appendFileSync('resources/function.js', value);
                 }
             } catch (err) {
                 reject(err);
@@ -118,7 +118,7 @@ class CodeService {
     }
 
     zipComponent() {
-        this.generatedFile = zipper.sync.zip("resources/captured-pokemons").compress().save("captured-pokemons.zip");
+        this.generatedFile = zipper.sync.zip("resources/").compress().save("resources/captured-pokemons.zip");
     }
 }
 
