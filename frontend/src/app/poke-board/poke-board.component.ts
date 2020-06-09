@@ -122,7 +122,7 @@ export class PokeBoardComponent implements OnInit {
     this.pokemonBoard.push({content: this.allPokemons[Math.floor(Math.random() * this.allPokemons.length)]});
   }
 
-  downloadFile(response) {
+  downloadFile(response: any) {
     const dataType = response.type;
     //////////////////////////////////////////////////
     // SHAME ZONE START HERE

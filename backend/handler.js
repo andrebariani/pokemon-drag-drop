@@ -1,11 +1,12 @@
 'use strict';
+const fs = require('fs');
 const CodeService = require('./codeService');
 
 module.exports.handler = async event => {
   const codeService = new CodeService();
   let res = {};
   try {
-    await codeService.generateToDownload(event, () => {
+    await codeService.generateToDownload(JSON.parse(event.body), () => {
       res = {
         statusCode: 200,
         headers: {
@@ -13,7 +14,6 @@ module.exports.handler = async event => {
         },
         isBase64Encoded: 'true',
         body: codeService.generatedFile,
-        type: 'html/css'
       };
     });
   } catch(err) {

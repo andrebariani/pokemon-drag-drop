@@ -1,0 +1,154 @@
+{
+    "pokemons": [
+      {
+        "content": {},
+        "type": "hor",
+        "label": "Horizontal",
+        "children": [
+          {
+            "content": {
+              "id": 6,
+              "name": {
+                "english": "Charizard"
+              },
+              "type": [
+                "Fire",
+                "Flying"
+              ],
+              "base": {
+                "HP": 78,
+                "Attack": 84,
+                "Defense": 78,
+                "SpAttack": 109,
+                "SpDefense": 85,
+                "Speed": 100
+              }
+            }
+          },
+          {
+            "content": {
+              "id": 9,
+              "name": {
+                "english": "Blastoise"
+              },
+              "type": [
+                "Water"
+              ],
+              "base": {
+                "HP": 79,
+                "Attack": 83,
+                "Defense": 100,
+                "SpAttack": 85,
+                "SpDefense": 105,
+                "Speed": 78
+              }
+            }
+          },
+          {
+            "content": {
+              "id": 2,
+              "name": {
+                "english": "Ivysaur"
+              },
+              "type": [
+                "Grass",
+                "Poison"
+              ],
+              "base": {
+                "HP": 60,
+                "Attack": 62,
+                "Defense": 63,
+                "SpAttack": 80,
+                "SpDefense": 80,
+                "Speed": 60
+              }
+            }
+          }
+        ]
+      },
+      {
+        "content": {},
+        "type": "vert",
+        "label": "Vertical",
+        "children": [
+          {
+            "content": {
+              "id": 25,
+              "name": {
+                "english": "Pikachu"
+              },
+              "type": [
+                "Electric"
+              ],
+              "base": {
+                "HP": 35,
+                "Attack": 55,
+                "Defense": 40,
+                "SpAttack": 50,
+                "SpDefense": 50,
+                "Speed": 90
+              }
+            }
+          },
+          {
+            "content": {
+              "id": 12,
+              "name": {
+                "english": "Butterfree"
+              },
+              "type": [
+                "Bug",
+                "Flying"
+              ],
+              "base": {
+                "HP": 60,
+                "Attack": 45,
+                "Defense": 50,
+                "SpAttack": 90,
+                "SpDefense": 80,
+                "Speed": 70
+              }
+            }
+          },
+          {
+            "content": {
+              "id": 11,
+              "name": {
+                "english": "Metapod"
+              },
+              "type": [
+                "Bug"
+              ],
+              "base": {
+                "HP": 50,
+                "Attack": 20,
+                "Defense": 55,
+                "SpAttack": 25,
+                "SpDefense": 25,
+                "Speed": 30
+              }
+            }
+          }
+        ]
+      },
+      {
+        "content": {
+          "id": 10,
+          "name": {
+            "english": "Caterpie"
+          },
+          "type": [
+            "Bug"
+          ],
+          "base": {
+            "HP": 45,
+            "Attack": 30,
+            "Defense": 35,
+            "SpAttack": 20,
+            "SpDefense": 20,
+            "Speed": 45
+          }
+        }
+      }
+    ]
+  }
