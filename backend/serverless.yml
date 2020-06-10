@@ -17,6 +17,7 @@ functions:
           path: /api
           method: post
           cors: true
+          authorizer: aws_iam
 
 package:
   exclude:
