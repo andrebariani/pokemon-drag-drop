@@ -1,5 +1,4 @@
 service: poc-poke
-app: poc-poke
 org: andrebariani
 
 provider:

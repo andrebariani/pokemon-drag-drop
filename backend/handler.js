@@ -3,8 +3,7 @@ const fs = require('fs');
 const CodeService = require('./codeService');
 
 module.exports.handler = async event => {
-  console.log('o tipo do body é: ', typeof event.body);
-  console.log('o body é:', event.body);
+  console.log('o evento é: ', event)
   const codeService = new CodeService();
   let res = {};
   try {
@@ -14,6 +13,7 @@ module.exports.handler = async event => {
         headers: {
           'Content-Type': 'application/zip',
           'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': true,
         },
         isBase64Encoded: 'true',
         body: codeService.generatedFile,
