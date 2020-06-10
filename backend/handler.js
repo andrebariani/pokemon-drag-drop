@@ -3,7 +3,7 @@ const fs = require('fs');
 const CodeService = require('./codeService');
 
 module.exports.handler = async event => {
-  console.log('o evento é: ', event)
+  
   const codeService = new CodeService();
   let res = {};
   try {
