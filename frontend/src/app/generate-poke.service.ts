@@ -22,7 +22,7 @@ export class GeneratePokeService {
     {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
-          'Accept': '*/*'
+          'Accept': 'application/zip'
         }),
         responseType: 'blob'
     })

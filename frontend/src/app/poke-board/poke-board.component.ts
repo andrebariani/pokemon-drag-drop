@@ -151,6 +151,7 @@ export class PokeBoardComponent implements OnInit {
 
     this.generatePoke.download(downloadPB).subscribe({
       next: response => {
+        console.log(response);
         this.downloadFile(response);
       },
       error: err => {
