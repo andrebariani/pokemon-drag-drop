@@ -70,4 +70,4 @@ jobs:
         aws-region: sa-east-1
         
     - name: Deploy
-      run: aws s3 rm s3://mybucket --recursive && aws s3 cp dist/ProtoDnD/ s3://poc-app-poke/ --recursive
+      run: aws s3 rm s3://poc-app-poke/ --recursive && aws s3 cp dist/ProtoDnD/ s3://poc-app-poke/ --recursive
