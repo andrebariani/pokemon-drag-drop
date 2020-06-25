@@ -30,7 +30,7 @@ jobs:
       run: ls
 
     - name: CD to frontend
-      run: cd frontend
+      run: cd ./frontend/
 
     - name: ls
       run: ls
