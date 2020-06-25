@@ -7,17 +7,19 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
-      - 'package.json'
+      - './frontend/package.json'
   pull_request:
     branches: [ master ]
     paths-ignore:
-      - 'package.json'
+      - './frontend/package.json'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./frontend
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -25,25 +27,24 @@ jobs:
     - uses: actions/checkout@v2
       with:
         token: ${{ secrets.TOKEN_ACTION }}
+        working-directory: ${{env.working-directory}}
 
     - name: ls
       run: ls
-
-    - name: CD to frontend
-      run: cd ./frontend/
-
-    - name: ls
-      run: ls
+      working-directory: ${{env.working-directory}}
 
     - name: Install dependencies
       run: npm ci
+      working-directory: ${{env.working-directory}}
 
     - name: Run tests
       run: npm test
+      working-directory: ${{env.working-directory}}
       
     - name: Build
       run: npm run ng -- build
-      if: ${{github.event_name == 'push'}}  
+      if: ${{github.event_name == 'push'}}
+      working-directory: ${{env.working-directory}} 
 
     - name: Conventional Changelog Action
       uses: TriPSs/conventional-changelog-action@v2
@@ -51,11 +52,13 @@ jobs:
          github-token: ${{ secrets.TOKEN_ACTION }}
          output-file: 'false'
          git-message: 'bump: {version}'
-      if: ${{github.event_name == 'push'}}  
+      if: ${{github.event_name == 'push'}}
+      working-directory: ${{env.working-directory}}
 
-    - name: ls
+    - name: Show version number
       run: echo steps.changelog.outputs.version
-      if: ${{github.event_name == 'push'}}  
+      if: ${{github.event_name == 'push'}}
+      working-directory: ${{env.working-directory}}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
@@ -63,9 +66,7 @@ jobs:
           name: 'pokemon-drag-drop'
           path: dist/
       if: ${{github.event_name == 'push'}}
-
-    - name: ls
-      run: ls
+      working-directory: ${{env.working-directory}}
 
     - name: Configure AWS credentials from Test account
       uses: aws-actions/configure-aws-credentials@v1
@@ -73,6 +74,8 @@ jobs:
         aws-access-key-id: ${{ secrets.ADMIN_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.ADMIN_AWS_SECRET_ACCESS_KEY }}
         aws-region: sa-east-1
+        working-directory: ${{env.working-directory}}
 
     - name: List Buckets
       run: aws s3 ls
+      working-directory: ${{env.working-directory}}
