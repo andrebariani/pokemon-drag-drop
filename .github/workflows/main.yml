@@ -62,12 +62,12 @@ jobs:
           path: frontend/dist/
       if: ${{github.event_name == 'push'}}
       
-    - name: Configure AWS credentials from Test account
+    - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.ADMIN_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.ADMIN_AWS_SECRET_ACCESS_KEY }}
         aws-region: sa-east-1
         
-    - name: List Buckets
-      run: aws s3 ls
+    - name: Deploy
+      run: aws s3 rm s3://mybucket --recursive && aws s3 cp dist/ProtoDnD/ s3://poc-app-poke/ --recursive
