@@ -59,7 +59,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
           name: 'pokemon-drag-drop'
-          path: dist/
+          path: frontend/dist/
       if: ${{github.event_name == 'push'}}
       
     - name: Configure AWS credentials from Test account
