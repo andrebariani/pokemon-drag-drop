@@ -1,11 +1,5 @@
 # This is a basic workflow to help you get started with Actions
-# Miau
 name: Build
-
-# inputs:
-#   ExecuteDeploy:
-#     description: 'Choice to deploy'
-#     default: false
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
@@ -64,10 +58,15 @@ jobs:
           path: dist/
       if: ${{github.event_name == 'push'}}
 
-    - name: Deploy Artifact
-      uses: serverless/github-action@master
+    - name: ls
+      run: ls
+
+    - name: Configure AWS credentials from Test account
+      uses: aws-actions/configure-aws-credentials@v1
       with:
-        args: client deploy
-      env:
-        SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-      if: ${{github.event_name == 'push'}}
+        aws-access-key-id: ${{ secrets.ADMIN_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.ADMIN_AWS_SECRET_ACCESS_KEY }}
+        aws-region: sa-east-1
+
+    - name: List Buckets
+      run: aws s3 ls
