@@ -26,8 +26,14 @@ jobs:
       with:
         token: ${{ secrets.TOKEN_ACTION }}
 
+    - name: ls
+      run: ls
+
     - name: CD to frontend
       run: cd frontend
+
+    - name: ls
+      run: ls
 
     - name: Install dependencies
       run: npm ci
