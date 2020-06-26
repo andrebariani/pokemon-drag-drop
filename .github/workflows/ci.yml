@@ -23,9 +23,6 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-
-    - name: Run tests
-      run: npm test
       
     - name: Build
       run: npm run ng -- build
@@ -39,10 +36,6 @@ jobs:
          git-message: 'bump: {version}'
       if: ${{github.event_name == 'push'}}
 
-    - name: Show version number
-      run: echo steps.changelog.outputs.version
-      if: ${{github.event_name == 'push'}}
-      
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
