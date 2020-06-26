@@ -23,14 +23,13 @@ jobs:
         token: ${{ secrets.TOKEN_ACTION }}
 
     - name: Download built artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@v2
         with:
           name: 'pokemon-drag-drop'
           path: frontend/dist/
 
     - name: Display structure of downloaded files
       run: ls -R
-      working-directory: frontend/dist/
 
     # - name: Configure AWS credentials
     #   uses: aws-actions/configure-aws-credentials@v1
