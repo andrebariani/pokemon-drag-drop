@@ -49,6 +49,7 @@ jobs:
           name: 'pokemon-drag-drop'
           path: frontend/dist/
       if: ${{github.event_name == 'push'}}
+
   Deploy:
     if: contains(github.event.push.labels.*.name, 'deploy')
     needs: Build
