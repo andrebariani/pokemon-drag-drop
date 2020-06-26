@@ -69,9 +69,7 @@
             </div>
 
             <div class="my-card card-box" *ngIf="pokemon.type === 'hor'">
-                <div class="my-card-header">
-                    <input matInput [(ngModel)]="pokemon.label" placeholder="Nova PokeBox Horizontal" />
-                </div>
+                <div class="my-card-header"><input matInput [(ngModel)]="pokemon.label" placeholder="Nova PokeBox Horizontal" /></div>
                 <div class="my-card-body-hor" dndDropzone
                     (dndDrop)="onDrop($event, pokemon.children)" [dndDropzone]="[dropzoneTypes[0]]">
                     <ng-container
