@@ -23,10 +23,10 @@ jobs:
         token: ${{ secrets.TOKEN_ACTION }}
 
     - name: Download built artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: 'pokemon-drag-drop'
-          path: frontend/dist/
+      uses: actions/download-artifact@v2
+      with:
+        name: 'pokemon-drag-drop'
+        path: frontend/dist/
 
     - name: Display structure of downloaded files
       run: ls -R
