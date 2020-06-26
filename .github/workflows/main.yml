@@ -50,9 +50,11 @@ jobs:
           path: frontend/dist/
       if: ${{github.event_name == 'push'}}
 
-    - name: Show labels
-      run: echo $github.event.push.labels.*.name
-
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+          # a
   Deploy:
     # if: contains(github.event.push.labels.*.name, 'deploy')
     needs: Build
