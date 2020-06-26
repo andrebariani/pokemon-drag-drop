@@ -9,7 +9,7 @@ on:
 
 jobs:
   Deploy:
-    if: contains(github.event.pull_request.labels.*.name, 'deploy')
+    if: contains(github.event.push.labels.*.name, 'deploy')
     needs: Build
     runs-on: ubuntu-latest
     defaults:
