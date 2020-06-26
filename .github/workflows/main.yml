@@ -1,8 +1,5 @@
-# This is a basic workflow to help you get started with Actions
-name: CI
+name: Main
 
-# Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
@@ -10,28 +7,19 @@ on:
       - './frontend/package.json'
   pull_request:
     branches: [ master ]
-    paths-ignore:
-      - './frontend/package.json'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build:
-    # The type of runner that the job will run on
+  CI_CD:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
         working-directory: frontend
     
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
       with:
         token: ${{ secrets.TOKEN_ACTION }}
-
-    - name: ls
-      run: ls
 
     - name: Install dependencies
       run: npm ci
@@ -68,6 +56,10 @@ jobs:
         aws-access-key-id: ${{ secrets.ADMIN_AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.ADMIN_AWS_SECRET_ACCESS_KEY }}
         aws-region: sa-east-1
+      if: contains(github.event.push.labels.*.name, 'deploy')
         
     - name: Deploy
-      run: aws s3 rm s3://poc-app-poke/ --recursive && aws s3 cp dist/ProtoDnD/ s3://poc-app-poke/ --recursive
+      run: |
+        aws s3 rm s3://poc-app-poke/ --recursive &&
+        aws s3 cp dist/ProtoDnD/ s3://poc-app-poke/ --recursive
+      if: contains(github.event.push.labels.*.name, 'deploy')
