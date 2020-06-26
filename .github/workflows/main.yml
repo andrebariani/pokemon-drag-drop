@@ -24,8 +24,8 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run tests
-      run: npm test
+    # - name: Run tests
+    #   run: npm test
       
     - name: Build
       run: npm run ng -- build
@@ -50,8 +50,11 @@ jobs:
           path: frontend/dist/
       if: ${{github.event_name == 'push'}}
 
+    - name: Show labels
+      run: echo $github.event.push.labels.*.name
+
   Deploy:
-    if: contains(github.event.push.labels.*.name, 'deploy')
+    # if: contains(github.event.push.labels.*.name, 'deploy')
     needs: Build
     runs-on: ubuntu-latest
     defaults:
