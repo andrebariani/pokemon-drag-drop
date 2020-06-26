@@ -1,0 +1,44 @@
+name: CD
+
+on:
+  push:
+    branches: [ master ]
+    types: [labeled]
+    paths-ignore:
+      - './frontend/package.json'
+
+jobs:
+  Deploy:
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
+    needs: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: frontend
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.TOKEN_ACTION }}
+
+    - name: Download built artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: 'pokemon-drag-drop'
+        path: frontend/dist/
+
+    - name: Display structure of downloaded files
+      run: ls -R
+
+    # - name: Configure AWS credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: ${{ secrets.ADMIN_AWS_ACCESS_KEY_ID }}
+    #     aws-secret-access-key: ${{ secrets.ADMIN_AWS_SECRET_ACCESS_KEY }}
+    #     aws-region: sa-east-1
+        
+    # - name: Deploy
+    #   run: |
+    #     aws s3 rm s3://poc-app-poke/ --recursive &&
+    #     aws s3 cp dist/ProtoDnD/ s3://poc-app-poke/ --recursive
