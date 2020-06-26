@@ -50,7 +50,7 @@ jobs:
           path: frontend/dist/
       if: ${{github.event_name == 'push'}}
 
-    - name: Display Labels
+    - name: Show labels
       run: echo $github.event.push.labels.*.name
 
   Deploy:
