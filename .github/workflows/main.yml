@@ -9,7 +9,7 @@ on:
     branches: [ master ]
 
 jobs:
-  CI_CD:
+  CI-CD:
     runs-on: ubuntu-latest
     defaults:
       run:
