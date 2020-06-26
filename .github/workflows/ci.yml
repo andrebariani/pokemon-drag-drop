@@ -6,7 +6,7 @@ on:
     paths-ignore:
       - './frontend/package.json'
   pull_request:
-    branches: [ master ]
+    branches: [ master, release ]
 
 jobs:
   Build:
