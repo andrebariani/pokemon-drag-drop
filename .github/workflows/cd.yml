@@ -64,6 +64,9 @@ jobs:
         GITHUB_CONTEXT: ${{ toJson(github) }}
       run: echo "$GITHUB_CONTEXT"
 
+    - name: List last commits
+      run: git log -n2
+
     - uses: actions/download-artifact@v2
       with:
         name: 'pokemon-drag-drop'
