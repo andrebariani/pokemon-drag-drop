@@ -2,13 +2,13 @@ name: CD
 
 on:
   pull_request_review:
-    types: [dismissed]
+    types: [submitted]
     paths-ignore:
       - 'package.json'
 
 jobs:
-  Deploy:
-    if: contains(github.event.pull_request.labels.*.name, 'deploy')
+  Build:
+    if: contains(github.event.review.state, "approved")
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -27,10 +27,47 @@ jobs:
 
     - name: Install dependencies
       run: npm ci
-      
+
+    - name: Conventional Changelog Action
+      uses: TriPSs/conventional-changelog-action@v2
+      with:
+         github-token: ${{ secrets.TOKEN_ACTION }}
+         output-file: 'false'
+         git-message: 'bump: {version}'
+
     - name: Build
       run: npm run ng -- build
-      # a
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v1
+      with:
+          name: 'pokemon-drag-drop'
+          path: frontend/dist/
+
+  Deploy:
+    needs: Build
+    if: contains(github.event.pull_request.labels.*.name, 'deploy')
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: frontend
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.TOKEN_ACTION }}
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: 'pokemon-drag-drop'
+        path: frontend/dist/
+
     - name: Display structure of files
       run: ls -R
 
