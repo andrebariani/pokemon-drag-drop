@@ -8,7 +8,7 @@ on:
 
 jobs:
   Build:
-    if: contains(github.event.review.state, "approved")
+    if: ${{github.event.review.state == 'approved'}}
     runs-on: ubuntu-latest
     defaults:
       run:
