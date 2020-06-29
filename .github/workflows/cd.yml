@@ -28,7 +28,7 @@ jobs:
       
     - name: Build
       run: npm run ng -- build
-
+      # a
     - name: Display structure of files
       run: ls -R
 
