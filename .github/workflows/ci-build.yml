@@ -4,9 +4,7 @@ on:
   push:
     branches: [ master ]
     paths-ignore:
-      - './frontend/package.json'
-  pull_request:
-    branches: [ master, release ]
+      - 'package.json'
 
 jobs:
   Build:
@@ -21,24 +19,27 @@ jobs:
       with:
         token: ${{ secrets.TOKEN_ACTION }}
 
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+
     - name: Install dependencies
       run: npm ci
-      
-    - name: Build
-      run: npm run ng -- build
-      if: ${{github.event_name == 'push'}}
 
     - name: Conventional Changelog Action
+      id: changelog
       uses: TriPSs/conventional-changelog-action@v2
       with:
          github-token: ${{ secrets.TOKEN_ACTION }}
          output-file: 'false'
          git-message: 'bump: {version}'
-      if: ${{github.event_name == 'push'}}
+
+    - name: Build
+      run: npm run ng -- build --prod
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
           name: 'pokemon-drag-drop'
           path: frontend/dist/
-      if: ${{github.event_name == 'push'}}
