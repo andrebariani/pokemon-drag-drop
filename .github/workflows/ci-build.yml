@@ -8,6 +8,7 @@ on:
 
 jobs:
   Build:
+    # if: contains(github.event.review.state, 'deploy')
     runs-on: ubuntu-latest
     defaults:
       run:
