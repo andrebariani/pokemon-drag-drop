@@ -27,7 +27,6 @@ jobs:
       
     - name: Build
       run: npm run ng -- build
-      if: ${{github.event_name == 'push'}}
 
     - name: Conventional Changelog Action
       uses: TriPSs/conventional-changelog-action@v2
@@ -35,11 +34,9 @@ jobs:
          github-token: ${{ secrets.TOKEN_ACTION }}
          output-file: 'false'
          git-message: 'bump: {version}'
-      if: ${{github.event_name == 'push'}}
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v1
       with:
           name: 'pokemon-drag-drop'
           path: frontend/dist/
-      if: ${{github.event_name == 'push'}}
