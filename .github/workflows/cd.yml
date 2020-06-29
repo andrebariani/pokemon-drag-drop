@@ -3,8 +3,6 @@ name: CD
 on:
   pull_request_review:
     types: [dismissed]
-  pull_request:
-    types: [labeled]
 
 jobs:
   Deploy:
@@ -30,7 +28,6 @@ jobs:
     
     - name: Build
       run: npm run ng -- build
-      if: ${{github.event_name == 'push'}}
 
     - name: Display structure of files
       run: ls -R
