@@ -3,6 +3,8 @@ name: CD
 on:
   pull_request_review:
     types: [dismissed]
+    paths-ignore:
+      - 'package.json'
 
 jobs:
   Deploy:
