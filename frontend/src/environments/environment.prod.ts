@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+   production: true,
+   APIendpoint: '${process.env.LAMBDA_API_ENDPOINT}',
 };

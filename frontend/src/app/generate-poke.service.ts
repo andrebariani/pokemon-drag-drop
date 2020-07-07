@@ -3,13 +3,16 @@ import { NestedListPokemon } from './models/nested-list-pokemon.model';
 import { Observable, throwError } from 'rxjs';
 import { HttpHeaders, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../environments/environment';
+
+const APIendpoint = environment.APIendpoint
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneratePokeService {
 
-  APIendpoint: string = 'https://erj76lmysc.execute-api.sa-east-1.amazonaws.com/dev/api'; 
+  // APIendpoint: string = 'https://erj76lmysc.execute-api.sa-east-1.amazonaws.com/dev/api'; 
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +21,7 @@ export class GeneratePokeService {
       pokemons: pokemons
     });
 
-    return this.http.post(this.APIendpoint, pokes,
+    return this.http.post(APIendpoint, pokes,
     {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
