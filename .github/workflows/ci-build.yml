@@ -35,6 +35,14 @@ jobs:
          output-file: 'false'
          git-message: 'bump: {version}'
 
+    - name: Set API endpoints to environment
+      run: ts-node -O '{"module": "commonjs"}' .\build.config.ts
+      env:
+          LAMBDA_API_ENDPOINT: ${{ secrets.LAMBDA_API_ENDPOINT }}
+
+    - name: Show Key
+      run: cat .\src\environments\environment.prod.ts
+
     - name: Build
       run: npm run ng -- build --prod
 
