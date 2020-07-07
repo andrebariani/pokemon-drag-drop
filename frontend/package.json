@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "config": "ts-node -O \"{\"module\": \"commonjs\"}\" ./build.config.ts",
+    "config": "ts-node -O '{\"module\": \"commonjs\"}' ./build.config.ts",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
